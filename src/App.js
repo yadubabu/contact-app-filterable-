@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App =()=>{
+  const [input,setInput]=useState('');
+  const contacts=['Adom','Anne','Alane','Abe',
+                  'Bob','Bebe','Brad','Botson',
+                  'Charles','Ceves','Cathy','carle'];
+   useEffect(()=>{
+     fetchContacts();
+   },[]);
+    
+ const fetchContacts=()=>{
+      if(input){
+        const search=input.toUpperCase();
+      return contacts.filter(name=>name.toUpperCase().match(`${search}`)).map(contact=>(
+        <li className='ui header'>{contact}</li>
+      ))
+    }else{
+      return contacts.map(contact=>{
+        return (
+          <div className='ui container'>
+            <ul className='ui content'>
+              <li className='ui header'>{contact}</li>
+            </ul>
+          </div>
+        )
+      })
+        
+      }
+    
 }
+    return(
+     <div className='ui container'>
+       <center><h1>My Contacts</h1></center>
+       <form className='ui form' >
+         <input type='text' 
+            onChange={(e)=>setInput(e.target.value)}
+            placeholder='Search for Input'
+        />
+      </form>
+        {fetchContacts()}
+      </div>
+    )
+    }
 
 export default App;
